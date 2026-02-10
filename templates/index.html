@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Diffusion Image Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">🎨 Stable Diffusion Generator</h1>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Generate</a></li>
+                <li><a href="/gallery">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="content-wrapper">
+            <!-- Left Panel: Controls -->
+            <div class="controls-panel">
+                <h2>Generate Image</h2>
+                
+                <form id="generateForm">
+                    <div class="form-group">
+                        <label for="prompt">Prompt *</label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            rows="3" 
+                            placeholder="A beautiful sunset over mountains..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="negative_prompt">Negative Prompt</label>
+                        <textarea 
+                            id="negative_prompt" 
+                            name="negative_prompt" 
+                            rows="2" 
+                            placeholder="blurry, low quality, distorted..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="width">Width</label>
+                            <input type="number" id="width" name="width" value="512" min="64" max="1024" step="64">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="number" id="height" name="height" value="512" min="64" max="1024" step="64">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="steps">Steps</label>
+                            <input type="number" id="steps" name="steps" value="50" min="1" max="150">
+                            <small>More steps = better quality but slower</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="guidance_scale">Guidance Scale</label>
+                            <input type="number" id="guidance_scale" name="guidance_scale" value="7.5" min="1" max="20" step="0.5">
+                            <small>How closely to follow prompt</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seed">Seed (optional)</label>
+                        <input type="number" id="seed" name="seed" placeholder="Random">
+                        <small>Use same seed for reproducible results</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="generateBtn">
+                        <span class="btn-text">Generate Image</span>
+                        <span class="loader" style="display: none;"></span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Panel: Result -->
+            <div class="result-panel">
+                <h2>Generated Image</h2>
+                
+                <div id="resultContainer">
+                    <div class="placeholder">
+                        <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <p>Your generated image will appear here</p>
+                    </div>
+                </div>
+
+                <div id="statusMessage" class="status-message" style="display: none;"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Stable Diffusion Image Generator | Powered by Hugging Face Diffusers</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

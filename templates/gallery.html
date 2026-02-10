@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Stable Diffusion Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">🎨 Stable Diffusion Generator</h1>
+            <ul class="nav-links">
+                <li><a href="/">Generate</a></li>
+                <li><a href="/gallery" class="active">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="gallery-header">
+            <h2>Image Gallery</h2>
+            <p>All your generated images</p>
+        </div>
+
+        {% if images %}
+        <div class="gallery-grid">
+            {% for image in images %}
+            <div class="gallery-item">
+                <img src="{{ image.url }}" alt="{{ image.filename }}" loading="lazy">
+                <div class="gallery-item-overlay">
+                    <a href="{{ image.url }}" target="_blank" class="btn btn-small">View Full</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <h3>No images yet</h3>
+            <p>Generate your first image to see it here!</p>
+            <a href="/" class="btn btn-primary">Generate Image</a>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Stable Diffusion Image Generator | Powered by Hugging Face Diffusers</p>
+        </div>
+    </footer>
+</body>
+</html>
