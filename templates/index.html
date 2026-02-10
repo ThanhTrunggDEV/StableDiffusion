@@ -64,9 +64,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="aspect_ratio">📐 Tỉ Lệ Khung Hình</label>
+                        <label for="aspect_ratio">📐 Chọn Khung Hình</label>
                         <select id="aspect_ratio" name="aspect_ratio">
-                            <option value="custom">🎨 Tùy Chỉnh</option>
                             <option value="1:1" selected>⬛ Vuông (1:1) - 512x512</option>
                             <option value="16:9">🖼️ Ngang (16:9) - 896x512</option>
                             <option value="9:16">📱 Dọc (9:16) - 512x896</option>
@@ -74,17 +73,35 @@
                             <option value="3:4">📄 Dọc 3:4 - 480x640</option>
                             <option value="3:2">📷 Ngang 3:2 - 768x512</option>
                             <option value="2:3">🖼️ Dọc 2:3 - 512x768</option>
+                            <option value="custom">⚙️ Tùy Chỉnh...</option>
                         </select>
+                        <div id="dimensionInfo" class="dimension-info">
+                            📏 Kích thước: <strong id="currentDimension">512 × 512 px</strong>
+                        </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="width">Width</label>
-                            <input type="number" id="width" name="width" value="512" min="64" max="1024" step="64">
-                        </div>
-                        <div class="form-group">
-                            <label for="height">Height</label>
-                            <input type="number" id="height" name="height" value="512" min="64" max="1024" step="64">
+                    <!-- Hidden inputs for width/height -->
+                    <input type="hidden" id="width" name="width" value="512">
+                    <input type="hidden" id="height" name="height" value="512">
+
+                    <!-- Custom dimension modal -->
+                    <div id="customDimensionModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <h3>⚙️ Kích Thước Tùy Chỉnh</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="custom_width">Width</label>
+                                    <input type="number" id="custom_width" value="512" min="64" max="1024" step="64">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custom_height">Height</label>
+                                    <input type="number" id="custom_height" value="512" min="64" max="1024" step="64">
+                                </div>
+                            </div>
+                            <div class="modal-buttons">
+                                <button type="button" class="btn btn-secondary" id="cancelCustom">Hủy</button>
+                                <button type="button" class="btn btn-primary" id="applyCustom">Áp Dụng</button>
+                            </div>
                         </div>
                     </div>
 

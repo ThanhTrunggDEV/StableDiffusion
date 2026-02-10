@@ -430,6 +430,68 @@ footer {
     }
 }
 
+/* Dimension Info Display */
+.dimension-info {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-color);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.dimension-info strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-secondary {
+    background-color: var(--surface-light);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
 @media (max-width: 768px) {
     .navbar .container {
         flex-direction: column;

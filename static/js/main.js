@@ -10,54 +10,100 @@ document.addEventListener('DOMContentLoaded', () => {
     const aspectRatioSelect = document.getElementById('aspect_ratio');
     const widthInput = document.getElementById('width');
     const heightInput = document.getElementById('height');
+    const dimensionInfo = document.getElementById('currentDimension');
+    
+    // Modal elements
+    const modal = document.getElementById('customDimensionModal');
+    const customWidthInput = document.getElementById('custom_width');
+    const customHeightInput = document.getElementById('custom_height');
+    const applyCustomBtn = document.getElementById('applyCustom');
+    const cancelCustomBtn = document.getElementById('cancelCustom');
 
     // Aspect ratio presets
     const aspectRatioPresets = {
-        '1:1': { width: 512, height: 512 },
-        '16:9': { width: 896, height: 512 },
-        '9:16': { width: 512, height: 896 },
-        '4:3': { width: 640, height: 480 },
-        '3:4': { width: 480, height: 640 },
-        '3:2': { width: 768, height: 512 },
-        '2:3': { width: 512, height: 768 }
+        '1:1': { width: 512, height: 512, name: 'Vuông' },
+        '16:9': { width: 896, height: 512, name: 'Ngang 16:9' },
+        '9:16': { width: 512, height: 896, name: 'Dọc 9:16' },
+        '4:3': { width: 640, height: 480, name: 'Ngang 4:3' },
+        '3:4': { width: 480, height: 640, name: 'Dọc 3:4' },
+        '3:2': { width: 768, height: 512, name: 'Ngang 3:2' },
+        '2:3': { width: 512, height: 768, name: 'Dọc 2:3' }
     };
+
+    // Update dimension display
+    function updateDimensionDisplay() {
+        const width = parseInt(widthInput.value);
+        const height = parseInt(heightInput.value);
+        dimensionInfo.textContent = `${width} × ${height} px`;
+    }
 
     // Handle aspect ratio change
     aspectRatioSelect.addEventListener('change', (e) => {
         const selectedRatio = e.target.value;
         
-        if (selectedRatio !== 'custom' && aspectRatioPresets[selectedRatio]) {
+        if (selectedRatio === 'custom') {
+            // Show modal for custom dimensions
+            customWidthInput.value = widthInput.value;
+            customHeightInput.value = heightInput.value;
+            modal.style.display = 'flex';
+        } else if (aspectRatioPresets[selectedRatio]) {
+            // Apply preset
             const preset = aspectRatioPresets[selectedRatio];
             widthInput.value = preset.width;
             heightInput.value = preset.height;
+            updateDimensionDisplay();
         }
     });
 
-    // When user manually changes width/height, switch to custom
-    widthInput.addEventListener('input', () => {
-        if (!isAspectRatioMatch()) {
-            aspectRatioSelect.value = 'custom';
+    // Apply custom dimensions
+    applyCustomBtn.addEventListener('click', () => {
+        widthInput.value = customWidthInput.value;
+        heightInput.value = customHeightInput.value;
+        updateDimensionDisplay();
+        modal.style.display = 'none';
+        
+        // Check if it matches a preset
+        const matchedPreset = findMatchingPreset();
+        if (matchedPreset) {
+            aspectRatioSelect.value = matchedPreset;
         }
     });
 
-    heightInput.addEventListener('input', () => {
-        if (!isAspectRatioMatch()) {
-            aspectRatioSelect.value = 'custom';
+    // Cancel custom dimensions
+    cancelCustomBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        // Reset to previous selection or default
+        const matchedPreset = findMatchingPreset();
+        aspectRatioSelect.value = matchedPreset || '1:1';
+        if (!matchedPreset) {
+            widthInput.value = 512;
+            heightInput.value = 512;
+            updateDimensionDisplay();
+        }
+    });
+
+    // Close modal on backdrop click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            cancelCustomBtn.click();
         }
     });
 
     // Check if current dimensions match any preset
-    function isAspectRatioMatch() {
+    function findMatchingPreset() {
         const currentWidth = parseInt(widthInput.value);
         const currentHeight = parseInt(heightInput.value);
         
         for (const [ratio, preset] of Object.entries(aspectRatioPresets)) {
             if (preset.width === currentWidth && preset.height === currentHeight) {
-                return true;
+                return ratio;
             }
         }
-        return false;
+        return null;
     }
+
+    // Initialize dimension display
+    updateDimensionDisplay();
 
     // Handle form submission
     form.addEventListener('submit', async (e) => {
