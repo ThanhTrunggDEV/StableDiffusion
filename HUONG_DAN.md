@@ -1,9 +1,23 @@
 # Hướng Dẫn Sử Dụng - Stable Diffusion Image Generator
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ThanhTrunggDEV/StableDiffusion/blob/main/StableDiffusion_Colab.ipynb)
+
 ## Giới Thiệu
 Ứng dụng web tạo ảnh từ mô tả văn bản sử dụng Stable Diffusion và Flask.
 
-## Yêu Cầu Hệ Thống
+## 🚀 Bắt Đầu Nhanh
+
+### Cách 1: Chạy trên Google Colab (Dễ nhất - Không cần cài đặt!)
+**Hoàn hảo để test mà không cần setup local**
+
+1. Nhấn vào badge "Open in Colab" ở trên
+2. Làm theo hướng dẫn trong notebook
+3. Lấy ngrok token miễn phí tại [ngrok.com](https://ngrok.com/)
+4. Chạy tất cả các cells và tận hưởng!
+
+### Cách 2: Chạy trên máy local
+
+## Yêu Cầu Hệ Thống (cho local)
 - Python 3.8 trở lên
 - GPU NVIDIA với CUDA (khuyến nghị) hoặc CPU
 - 8GB RAM trở lên (16GB+ khuyến nghị cho GPU)

@@ -1,6 +1,20 @@
 # Stable Diffusion Image Generator
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ThanhTrunggDEV/StableDiffusion/blob/main/StableDiffusion_Colab.ipynb)
+
 A web application for generating images using Stable Diffusion with Flask.
+
+## 🚀 Quick Start
+
+### Option 1: Run on Google Colab (Easiest - No Installation Required!)
+**Perfect for testing without local setup**
+
+1. Click the "Open in Colab" badge above
+2. Follow the instructions in the notebook
+3. Get your free ngrok token from [ngrok.com](https://ngrok.com/)
+4. Run all cells and enjoy!
+
+### Option 2: Run Locally
 
 ## Features
 
