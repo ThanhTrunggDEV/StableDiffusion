@@ -71,7 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
             height: parseInt(document.getElementById('height').value),
             steps: parseInt(document.getElementById('steps').value),
             guidance_scale: parseFloat(document.getElementById('guidance_scale').value),
-            seed: document.getElementById('seed').value.trim() || null
+            seed: document.getElementById('seed').value.trim() || null,
+            enhance_prompt: document.getElementById('enhance_prompt').checked,
+            use_default_negative: document.getElementById('use_default_negative').checked
         };
 
         // Validate prompt
@@ -170,6 +172,9 @@ async function loadSettings() {
         
         console.log('Application settings:', settings);
         
+        // Store settings globally
+        window.appSettings = settings;
+        
         // Update form defaults if needed
         document.getElementById('width').value = settings.default_width;
         document.getElementById('height').value = settings.default_height;
@@ -181,7 +186,33 @@ async function loadSettings() {
         document.getElementById('height').max = settings.max_height;
         document.getElementById('steps').max = settings.max_steps;
         
+        // Set enhancement options from config
+        document.getElementById('enhance_prompt').checked = settings.auto_enhance_prompt;
+        document.getElementById('use_default_negative').checked = settings.use_default_negative;
+        
     } catch (error) {
         console.error('Error loading settings:', error);
     }
 }
+
+// Show defaults dialog
+document.addEventListener('DOMContentLoaded', () => {
+    const showDefaultsLink = document.getElementById('showDefaults');
+    if (showDefaultsLink) {
+        showDefaultsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (!window.appSettings) {
+                alert('Settings not loaded yet. Please wait...');
+                return;
+            }
+            
+            const message = `📋 Default AI Enhancements:\\n\\n` +
+                `✨ Quality Keywords:\\n${window.appSettings.quality_enhancement_keywords}\\n\\n` +
+                `🛡️ Default Negative Prompt:\\n${window.appSettings.default_negative_prompt}\\n\\n` +
+                `💡 These are automatically added to improve image quality!`;
+            
+            alert(message);
+        });
+    }
+});

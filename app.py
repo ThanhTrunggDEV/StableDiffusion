@@ -74,6 +74,8 @@ def generate():
         steps = int(data.get('steps', Config.DEFAULT_STEPS))
         guidance_scale = float(data.get('guidance_scale', Config.DEFAULT_GUIDANCE_SCALE))
         seed = data.get('seed')
+        enhance_prompt = data.get('enhance_prompt', True)  # Default to True
+        use_default_negative = data.get('use_default_negative', True)  # Default to True
         
         # Validate parameters
         if not prompt:
@@ -85,6 +87,21 @@ def generate():
         if steps > Config.MAX_STEPS:
             return jsonify({'error': f'Too many steps'}), 400
         
+        # Enhance prompt if enabled
+        original_prompt = prompt
+        if enhance_prompt:
+            prompt = f"{prompt}, {Config.QUALITY_ENHANCEMENT_KEYWORDS}"
+            logger.info(f"Enhanced prompt: {prompt}")
+        
+        # Use default negative prompt if enabled and user didn't provide one
+        if use_default_negative:
+            if negative_prompt:
+                # Merge user's negative prompt with default
+                negative_prompt = f"{negative_prompt}, {Config.DEFAULT_NEGATIVE_PROMPT}"
+            else:
+                # Use only default
+                negative_prompt = Config.DEFAULT_NEGATIVE_PROMPT
+        
         # Convert seed to integer if provided
         if seed:
             try:
@@ -92,7 +109,9 @@ def generate():
             except ValueError:
                 seed = None
         
-        logger.info(f"Generating image: {prompt}")
+        logger.info(f"Generating image with prompt: {original_prompt}")
+        if negative_prompt:
+            logger.info(f"Negative prompt: {negative_prompt[:100]}...")
         
         # Get generator and generate image
         gen = get_generator()
@@ -132,7 +151,11 @@ def get_settings():
         'max_height': Config.MAX_HEIGHT,
         'max_steps': Config.MAX_STEPS,
         'model_id': Config.MODEL_ID,
-        'device': Config.DEVICE
+        'device': Config.DEVICE,
+        'default_negative_prompt': Config.DEFAULT_NEGATIVE_PROMPT,
+        'quality_enhancement_keywords': Config.QUALITY_ENHANCEMENT_KEYWORDS,
+        'auto_enhance_prompt': Config.AUTO_ENHANCE_PROMPT,
+        'use_default_negative': Config.USE_DEFAULT_NEGATIVE
     })
 
 

@@ -46,6 +46,24 @@
                     </div>
 
                     <div class="form-group">
+                        <label>🤖 AI Enhancement</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enhance_prompt" name="enhance_prompt" checked>
+                                <span>✨ Auto-enhance prompt (add quality keywords)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="use_default_negative" name="use_default_negative" checked>
+                                <span>🛡️ Use default negative prompt (prevent bad quality)</span>
+                            </label>
+                        </div>
+                        <small class="help-text">
+                            💡 Tip: These options improve image quality automatically. 
+                            <a href="#" id="showDefaults">Show defaults</a>
+                        </small>
+                    </div>
+
+                    <div class="form-group">
                         <label for="aspect_ratio">📐 Tỉ Lệ Khung Hình</label>
                         <select id="aspect_ratio" name="aspect_ratio">
                             <option value="custom">🎨 Tùy Chỉnh</option>
