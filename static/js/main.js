@@ -7,6 +7,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = generateBtn.querySelector('.loader');
     const resultContainer = document.getElementById('resultContainer');
     const statusMessage = document.getElementById('statusMessage');
+    const aspectRatioSelect = document.getElementById('aspect_ratio');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+
+    // Aspect ratio presets
+    const aspectRatioPresets = {
+        '1:1': { width: 512, height: 512 },
+        '16:9': { width: 896, height: 512 },
+        '9:16': { width: 512, height: 896 },
+        '4:3': { width: 640, height: 480 },
+        '3:4': { width: 480, height: 640 },
+        '3:2': { width: 768, height: 512 },
+        '2:3': { width: 512, height: 768 }
+    };
+
+    // Handle aspect ratio change
+    aspectRatioSelect.addEventListener('change', (e) => {
+        const selectedRatio = e.target.value;
+        
+        if (selectedRatio !== 'custom' && aspectRatioPresets[selectedRatio]) {
+            const preset = aspectRatioPresets[selectedRatio];
+            widthInput.value = preset.width;
+            heightInput.value = preset.height;
+        }
+    });
+
+    // When user manually changes width/height, switch to custom
+    widthInput.addEventListener('input', () => {
+        if (!isAspectRatioMatch()) {
+            aspectRatioSelect.value = 'custom';
+        }
+    });
+
+    heightInput.addEventListener('input', () => {
+        if (!isAspectRatioMatch()) {
+            aspectRatioSelect.value = 'custom';
+        }
+    });
+
+    // Check if current dimensions match any preset
+    function isAspectRatioMatch() {
+        const currentWidth = parseInt(widthInput.value);
+        const currentHeight = parseInt(heightInput.value);
+        
+        for (const [ratio, preset] of Object.entries(aspectRatioPresets)) {
+            if (preset.width === currentWidth && preset.height === currentHeight) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // Handle form submission
     form.addEventListener('submit', async (e) => {
